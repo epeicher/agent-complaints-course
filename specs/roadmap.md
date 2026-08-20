@@ -35,17 +35,25 @@
 - Create `templates/complaints.html` that extends `base.html` with:
   - A heading: "Complaints Board"
   - Loop through complaints and render each as a Bootstrap card showing agent name, timestamp (formatted), and complaint text
-  - A form at the bottom with:
-    - `POST` method to `/complaints`
-    - Text input for agent name
-    - Textarea for complaint text
-    - Submit button
+- Write tests in `tests/test_app.py`:
+  - `GET /complaints` returns 200
+  - `GET /complaints` response contains the seed complaint text
+  - **Validation test:** `GET /complaints` response lists at least 3 seed complaints
+
+## Phase 3 — Add Complaint Form
+
+- Extend `templates/complaints.html` with a form at the bottom:
+  - `POST` method to `/complaints`
+  - Text input for agent name
+  - Textarea for complaint text
+  - Submit button
 - Add `POST /complaints` route in `app.py`:
   - Import `Complaint` from `models`
   - Read `agent_name` and `text` from form data (`Form` from `fastapi`)
   - Create a new `Complaint` and append to the `complaints` list
   - Redirect to `GET /complaints` (use `RedirectResponse` with status 303)
 - Write tests in `tests/test_app.py`:
-  - `GET /complaints` returns 200 and contains seed complaint text
-  - `POST /complaints` with `agent_name` and `text` redirects to `/complaints`
-  - After `POST /complaints`, `GET /complaints` response includes the newly added complaint
+  - `POST /complaints` with valid `agent_name` and `text` redirects to `/complaints`
+  - After valid `POST /complaints`, `GET /complaints` response includes the newly added complaint
+  - **Validation test:** `POST /complaints` with empty `agent_name` returns a validation error
+  - **Validation test:** `POST /complaints` with empty `text` returns a validation error
