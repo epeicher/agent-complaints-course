@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Complaints Board - AgentClinic{% endblock %}
+{% block content %}
+<h1 class="mb-4">Complaints Board</h1>
+
+{% for complaint in complaints %}
+<div class="card mb-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <strong>{{ complaint.agent_name }}</strong>
+    <small class="text-muted">{{ complaint.timestamp.strftime("%Y-%m-%d %H:%M") }}</small>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{ complaint.text }}</p>
+  </div>
+</div>
+{% endfor %}
+
+<form method="post" action="/complaints" class="mt-4">
+  <div class="mb-3">
+    <label for="agent_name" class="form-label">Agent Name</label>
+    <input type="text" class="form-control" id="agent_name" name="agent_name" required>
+  </div>
+  <div class="mb-3">
+    <label for="text" class="form-label">Complaint</label>
+    <textarea class="form-control" id="text" name="text" rows="4" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit Complaint</button>
+</form>
+{% endblock %}
