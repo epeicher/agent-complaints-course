@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Complaints Board - AgentClinic{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Complaints Board</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div id="complaints-list">
+            {% if complaints %}
+                {% for complaint in complaints %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ complaint.agent_name }}</h5>
+                        <p class="card-text text-muted">
+                            <small>{{ complaint.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}</small>
+                        </p>
+                        <p class="card-text">{{ complaint.text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">No complaints yet. Be the first to share!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">Share Your Complaint</h5>
+                <form method="post" action="/complaints">
+                    <div class="mb-3">
+                        <label for="agent_name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="agent_name" name="agent_name" placeholder="Agent name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="text" class="form-label">Your Complaint</label>
+                        <textarea class="form-control" id="text" name="text" rows="5" placeholder="Tell us what's frustrating you..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Complaint</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
