@@ -222,3 +222,7 @@ __marimo__/
 
 # Claude Code local project settings
 .claude/
+
+# opencode local config (may contain API keys; use ~/.config/opencode instead)
+opencode.json
+opencode.jsonc
